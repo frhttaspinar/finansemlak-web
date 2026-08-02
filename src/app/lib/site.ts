@@ -31,14 +31,20 @@ export const LOGO_FOOTER = "/altlogo.png";
 export const ADDRESS_DISPLAY = `${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.locality}/${BUSINESS.region}`;
 
 /**
- * Harita bağlantıları koordinat içermez; yalnızca doğrulanmış açık adres üzerinden
- * arama yapar. Böylece uydurma enlem/boylam verisi kullanılmamış olur.
+ * Google işletme kaydının CID'si. Harita bağlantıları adres metni araması yerine
+ * doğrudan bu kayda gider; böylece harita genel bölge yerine işletmenin pinini açar.
+ * Koordinat tahmini yapılmaz, uydurma veri kullanılmaz.
  */
-const MAPS_QUERY = encodeURIComponent(
-  `${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.locality}, ${BUSINESS.region}`
-);
-export const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${MAPS_QUERY}`;
-export const MAPS_EMBED = `https://maps.google.com/maps?q=${MAPS_QUERY}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
+const GOOGLE_CID = "2946854600536148059";
+
+/** Google işletme profili — "Haritalarda aç" ve JSON-LD sameAs için. */
+export const GOOGLE_MAPS_BUSINESS_URL = `https://www.google.com/maps?cid=${GOOGLE_CID}`;
+
+/** Google'da yorum yazma bağlantısı (aynı işletme kaydına aittir). */
+export const GOOGLE_REVIEW_URL = "https://g.page/r/CVvIrmWlVOUoEBM/review";
+
+export const MAPS_LINK = GOOGLE_MAPS_BUSINESS_URL;
+export const MAPS_EMBED = `https://maps.google.com/maps?cid=${GOOGLE_CID}&output=embed&z=18`;
 
 /**
  * Emlak ofisine uygun RealEstateAgent şeması.
@@ -67,6 +73,6 @@ export function getBusinessJsonLd() {
       "@type": "City",
       name: "Amasya",
     },
-    sameAs: [BUSINESS.instagram],
+    sameAs: [BUSINESS.instagram, GOOGLE_MAPS_BUSINESS_URL],
   };
 }

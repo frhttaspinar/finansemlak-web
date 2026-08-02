@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Star } from "lucide-react";
 import NavLinks from "./NavLinks";
 import BrandLogo from "./BrandLogo";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { BUSINESS } from "../lib/site";
+import { BUSINESS, GOOGLE_REVIEW_URL } from "../lib/site";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -69,6 +69,19 @@ export default function Header() {
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
               </svg>
+            </Link>
+
+            {/* Google'da yorum yazma — telefon butonuyla aynı yükseklikte sade pill */}
+            <Link
+              href={GOOGLE_REVIEW_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Google'da yorum yapın (yeni sekmede açılır)"
+              className="group flex items-center gap-2 px-4 py-2 h-10 rounded-full bg-white border border-slate-200 text-brand-navy hover:border-brand-navy/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 font-medium whitespace-nowrap"
+            >
+              <Star className="w-4 h-4 text-brand-gold group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
+              <span className="hidden lg:inline text-sm lg:text-base">Google&apos;da Yorum Yap</span>
+              <span className="lg:hidden text-sm">Yorum Yap</span>
             </Link>
 
             <motion.a
@@ -139,10 +152,21 @@ export default function Header() {
               >
                 WhatsApp&apos;tan İletişime Geçin
               </Link>
+              <Link
+                href={GOOGLE_REVIEW_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Google'da yorum yapın (yeni sekmede açılır)"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 min-h-[48px] border border-slate-200 text-brand-navy px-6 py-3 rounded-full font-semibold"
+              >
+                <Star className="w-4 h-4 text-brand-gold" aria-hidden="true" />
+                Google&apos;da Yorum Yap
+              </Link>
               <a
                 href={`tel:${BUSINESS.phone}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full block text-center border border-slate-200 text-brand-navy px-6 py-3 rounded-full font-semibold"
+                className="w-full flex items-center justify-center min-h-[48px] border border-slate-200 text-brand-navy px-6 py-3 rounded-full font-semibold"
               >
                 {BUSINESS.phoneDisplay}
               </a>
