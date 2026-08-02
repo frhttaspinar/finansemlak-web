@@ -26,8 +26,8 @@ export default function Home() {
         <Hero09
           title="Finans Gayrimenkul Danışmanlığı"
           description="Amasya’da satılık ve kiralık konut, arsa ve iş yeri seçeneklerini keşfedin."
-          heroImage="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop"
-          heroAlt="Amasya’da satılık modern mimarili müstakil ev"
+          heroImage="/hero.jpg"
+          heroAlt="Finans Gayrimenkul için bahçeli müstakil konut görseli"
           bottomTitle="Finans Gayrimenkul ile"
           bottomTitleLine2="Doğru Yatırım."
           bottomText="Amasya Merkez’deki ofisimizde, şeffaf ve profesyonel bir danışmanlık anlayışıyla sizleri bekliyoruz."
