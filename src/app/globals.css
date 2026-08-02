@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-playfair);
+}
+
+/*
+  Marka renkleri doğrudan logo dosyalarından örneklendi:
+  lacivert, her iki logodaki baskın yazı/simge rengi;
+  altın ise alt logodaki yükselen grafik detayının rengi.
+  Metin ve ikon kontrastı korunacak şekilde bir tık koyulaştırıldı.
+*/
+@theme {
+  --color-brand-navy: #17335f;
+  --color-brand-navy-dark: #0f2444;
+  --color-brand-gold: #c1912f;
+}
+
+/* Klavye ile gezinirken her odaklanabilir öğede görünür bir odak halkası kalsın */
+:focus-visible {
+  outline: 2px solid var(--color-brand-navy);
+  outline-offset: 2px;
+}
+
+/*
+  Hareket azaltma tercihi: süslü geçişler ve sürekli tekrarlayan animasyonlar
+  devre dışı kalır, içerik her durumda tam görünür olur.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
