@@ -24,8 +24,8 @@ export default function Home() {
       <main className="flex-1 pt-20">
         {/* 1. Hero Section (Hero09) */}
         <Hero09
-          title="Amasya’da Güvenilir Gayrimenkul Danışmanlığı"
-          description="Finans Gayrimenkul Danışmanlık ile Amasya’da satılık ve kiralık konut, arsa ve iş yeri seçeneklerini keşfedin. Doğru mülke ulaşmak için ilk adımı atın."
+          title="Finans Gayrimenkul Danışmanlığı"
+          description="Amasya’da satılık ve kiralık konut, arsa ve iş yeri seçeneklerini keşfedin."
           heroImage="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop"
           heroAlt="Amasya’da satılık modern mimarili müstakil ev"
           bottomTitle="Finans Gayrimenkul ile"
