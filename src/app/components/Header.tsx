@@ -49,11 +49,11 @@ export default function Header() {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:block">
+          <div className="hidden xl:block">
             <NavLinks />
           </div>
 
-          <div className="hidden md:flex items-center gap-3 lg:gap-4">
+          <div className="hidden xl:flex items-center gap-3 lg:gap-4">
             <Link href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram hesabımız" className="group flex items-center justify-center w-10 h-10 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-slate-300 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#ig-gradient-header)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="w-5 h-5 group-hover:scale-110 transition-transform duration-300">
                 <defs>
@@ -105,7 +105,7 @@ export default function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="flex items-center xl:hidden">
             <button
               ref={menuButtonRef}
               type="button"
@@ -134,15 +134,16 @@ export default function Header() {
             initial={reduceMotion ? false : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={reduceMotion ? { opacity: 1 } : { opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-slate-100 overflow-hidden"
+            className="bg-white border-b border-slate-100 overflow-hidden xl:hidden"
           >
             <div className="px-4 pt-2 pb-6 space-y-4 shadow-lg flex flex-col">
               <p className="px-3 pt-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand-navy">
                 {BUSINESS.shortName}
               </p>
-              <Link href="#hakkimizda" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Hakkımızda</Link>
-              <Link href="#hizmetlerimiz" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Hizmetlerimiz</Link>
-              <Link href="#blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Blog</Link>
+              <Link href="/#hakkimizda" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Hakkımızda</Link>
+              <Link href="/#hizmetlerimiz" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Hizmetlerimiz</Link>
+              <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Blog</Link>
+              <Link href="/#iletisim" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">İletişim</Link>
               <Link
                 href={BUSINESS.whatsapp}
                 target="_blank"

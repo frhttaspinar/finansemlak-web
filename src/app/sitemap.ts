@@ -1,17 +1,19 @@
 import type { MetadataRoute } from "next";
+import { BLOG_INDEX_MODIFIED_AT, blogPosts, getBlogUrl } from "./lib/blog";
 import { SITE_URL } from "./lib/site";
 
-/**
- * Site tek sayfa olduğu için yalnızca gerçekten var olan ve
- * HTTP 200 dönen URL listelenir.
- */
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: SITE_URL,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
     },
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: BLOG_INDEX_MODIFIED_AT,
+    },
+    ...blogPosts.map((post) => ({
+      url: getBlogUrl(post.slug),
+      lastModified: post.modifiedAt,
+    })),
   ];
 }

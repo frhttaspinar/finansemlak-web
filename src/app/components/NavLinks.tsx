@@ -4,14 +4,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const links = [
-  { href: "#hakkimizda", label: "Hakkımızda" },
-  { href: "#hizmetlerimiz", label: "Hizmetlerimiz" },
-  { href: "#blog", label: "Blog" },
+  { href: "/#hakkimizda", label: "Hakkımızda" },
+  { href: "/#hizmetlerimiz", label: "Hizmetlerimiz" },
+  { href: "/blog", label: "Blog" },
+  { href: "/#iletisim", label: "İletişim" },
 ];
 
 export default function NavLinks() {
   return (
-    <nav className="hidden md:flex space-x-8">
+    <nav className="hidden md:flex space-x-5 lg:space-x-8">
       {links.map((link) => (
         <motion.div key={link.href} initial="rest" whileHover="hover" animate="rest">
           <Link
