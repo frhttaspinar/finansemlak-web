@@ -2,8 +2,11 @@ import { Landmark, MapPin, Phone, ShieldCheck } from "lucide-react";
 import {
   ADDRESS_DISPLAY,
   BUSINESS,
+  HOME_DESCRIPTION,
+  HOME_TITLE,
   MAPS_EMBED,
   MAPS_LINK,
+  SITE_URL,
 } from "./lib/site";
 import BrandLogo from "./components/BrandLogo";
 import ServiceCards from "./components/ServiceCards";
@@ -14,6 +17,35 @@ import ContactActions from "./components/ContactActions";
 import AnimatedAboutImage from "./components/AnimatedAboutImage";
 import Hero09 from "./components/Hero09";
 import DeveloperCredit from "./components/DeveloperCredit";
+
+/**
+ * Ana sayfanın WebPage düğümü. İşletme (#business) ve site (#website)
+ * düğümleri kök layout'ta bir kez tanımlandığı için burada yalnızca
+ * @id üzerinden ilişkilendirilir; aynı veri iki kez yazılmaz.
+ */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/#webpage`,
+      url: SITE_URL,
+      name: HOME_TITLE,
+      description: HOME_DESCRIPTION,
+      inLanguage: "tr-TR",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#business` },
+      primaryImageOfPage: { "@id": `${SITE_URL}/#primaryimage` },
+    },
+    {
+      "@type": "ImageObject",
+      "@id": `${SITE_URL}/#primaryimage`,
+      url: `${SITE_URL}/hero.jpg`,
+      contentUrl: `${SITE_URL}/hero.jpg`,
+      caption: "Finans Gayrimenkul için bahçeli müstakil konut görseli",
+    },
+  ],
+};
 
 export default function Home() {
   return (
@@ -186,6 +218,13 @@ export default function Home() {
 
       {/* 5. Sabit WhatsApp Butonu (Framer Motion nabız animasyonu) */}
       <WhatsAppButton />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
     </>
   );
 }

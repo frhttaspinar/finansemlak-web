@@ -14,6 +14,7 @@ import {
   getBlogUrl,
   getRelatedPosts,
 } from "../../lib/blog";
+import { getServicesForBlogPost } from "../../lib/services";
 import { BUSINESS, SITE_URL } from "../../lib/site";
 
 type BlogPageProps = {
@@ -94,6 +95,8 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
   const canonical = getBlogUrl(post.slug);
   const relatedPosts = getRelatedPosts(post.slug);
+  // Yazının konusuyla örtüşen hizmet sayfalarına doğal iç bağlantı
+  const relatedServices = getServicesForBlogPost(post.slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -150,6 +153,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         name: post.metadataTitle,
         description: post.description,
         inLanguage: "tr-TR",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
         breadcrumb: { "@id": `${canonical}#breadcrumb` },
         mainEntity: { "@id": `${canonical}#article` },
       },
@@ -267,6 +271,34 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                   );
                 })}
               </div>
+
+              {relatedServices.length > 0 && (
+                <section
+                  aria-labelledby="ilgili-hizmetler"
+                  className="mt-14 border-t border-slate-200 pt-10"
+                >
+                  <h2 id="ilgili-hizmetler" className="text-2xl font-bold text-slate-900">
+                    Bu konuda size nasıl yardımcı olabiliriz?
+                  </h2>
+                  <p className="mt-4 text-base leading-relaxed text-slate-700">
+                    Yazıda ele alınan başlıkları Amasya’daki kendi durumunuz için
+                    konuşmak isterseniz ilgili hizmet sayfalarımızı
+                    inceleyebilirsiniz.
+                  </p>
+                  <ul className="mt-5 space-y-3 text-base leading-relaxed text-slate-700">
+                    {relatedServices.map((service) => (
+                      <li key={service.slug}>
+                        <Link
+                          href={`/hizmetler/${service.slug}`}
+                          className="inline-flex min-h-11 items-center font-semibold text-brand-navy underline decoration-brand-gold/60 underline-offset-4 hover:text-brand-navy-dark"
+                        >
+                          {service.shortTitle}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
               <section aria-labelledby="kaynaklar" className="mt-14 border-t border-slate-200 pt-10">
                 <h2 id="kaynaklar" className="text-2xl font-bold text-slate-900">

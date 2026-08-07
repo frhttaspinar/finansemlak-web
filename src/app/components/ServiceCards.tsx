@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import {
+  ArrowRight,
   Home as HomeIcon,
   Map,
   Building2,
@@ -10,58 +12,16 @@ import {
   FileText,
   type LucideIcon,
 } from "lucide-react";
+import { services, type ServiceIconKey } from "../lib/services";
 
-type Service = {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  image: string;
-  wide?: boolean;
+/** Veri katmanındaki ikon anahtarlarının bileşen karşılıkları. */
+const icons: Record<ServiceIconKey, LucideIcon> = {
+  home: HomeIcon,
+  map: Map,
+  building: Building2,
+  calculator: Calculator,
+  file: FileText,
 };
-
-const services: Service[] = [
-  {
-    icon: HomeIcon,
-    title: "Satılık ve Kiralık Gayrimenkul Danışmanlığı",
-    description:
-      "İhtiyacınıza ve bütçenize en uygun konut ve yaşam alanlarını bulmanızda profesyonel rehberlik sunuyoruz.",
-    image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-  },
-  {
-    icon: Map,
-    title: "Arsa, Arazi ve Tarla Yatırım Yönetimi",
-    description:
-      "Geleceğinize güvenle yatırım yapmanız için değer kazanan bölgelerde toprak yatırımı analizi yapıyoruz.",
-    image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-  },
-  {
-    icon: Building2,
-    title: "Ticari Mülk, Dükkan ve Ofis Yönetimi",
-    description:
-      "İşletmeniz için ideal lokasyonu buluyor, ticari gayrimenkullerinizin en verimli şekilde değerlendirilmesini sağlıyoruz.",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-  },
-  {
-    icon: Calculator,
-    title: "Gayrimenkul Değerleme ve Ekspertiz",
-    description:
-      "Mülkünüzün gerçek piyasa değerini, güncel piyasa verileri ve analizlerle en doğru şekilde tespit ediyoruz.",
-    image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-  },
-  {
-    icon: FileText,
-    title: "Tapu ve Kredi Takip Süreçleri Danışmanlığı",
-    description:
-      "Bürokratik süreçleri sizin adınıza yönetiyor, alım-satım ve kredi işlemlerinizi hızlı ve güvenilir bir şekilde sonuçlandırıyoruz.",
-    image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-    wide: true,
-  },
-];
 
 // Kartların sırayla (stagger) sahneye girmesini yöneten kapsayıcı
 const containerVariants: Variants = {
@@ -94,10 +54,12 @@ export default function ServiceCards() {
       viewport={{ once: true, amount: 0.2 }}
     >
       {services.map((service) => {
-        const Icon = service.icon;
+        const Icon = icons[service.icon];
+        const href = `/hizmetler/${service.slug}`;
+
         return (
-          <motion.div
-            key={service.title}
+          <motion.article
+            key={service.slug}
             data-animate
             variants={reduceMotion ? undefined : cardVariants}
             whileHover={reduceMotion ? undefined : { scale: 1.03 }}
@@ -107,10 +69,14 @@ export default function ServiceCards() {
             }`}
           >
             {/* Hizmeti anlatan görsel */}
-            <div className="relative w-full h-48 overflow-hidden">
+            <Link
+              href={href}
+              aria-label={`${service.cardTitle} sayfasını inceleyin`}
+              className="relative block w-full h-48 overflow-hidden"
+            >
               <Image
                 src={service.image}
-                alt={service.title}
+                alt={service.imageAlt}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 // Geniş kart iki sütuna yayıldığı için daha büyük bir genişlik ister
@@ -125,17 +91,30 @@ export default function ServiceCards() {
               <div className="absolute bottom-4 left-4 w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-sm flex items-center justify-center text-brand-navy shadow-lg">
                 <Icon className="h-6 w-6" aria-hidden="true" />
               </div>
-            </div>
+            </Link>
 
             <div className="p-8 flex flex-col flex-grow">
               <h3 className="text-xl font-semibold text-slate-900 mb-4">
-                {service.title}
+                <Link href={href} className="transition-colors hover:text-brand-navy">
+                  {service.cardTitle}
+                </Link>
               </h3>
-              <p className="text-slate-600 leading-relaxed text-sm lg:text-base">
-                {service.description}
+              <p className="flex-grow text-slate-600 leading-relaxed text-sm lg:text-base">
+                {service.cardDescription}
               </p>
+              <Link
+                href={href}
+                aria-label={`${service.cardTitle} hizmetini inceleyin`}
+                className="mt-6 inline-flex min-h-11 items-center self-start font-semibold text-brand-navy transition-colors hover:text-brand-navy-dark"
+              >
+                Hizmeti İncele
+                <ArrowRight
+                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
             </div>
-          </motion.div>
+          </motion.article>
         );
       })}
     </motion.div>

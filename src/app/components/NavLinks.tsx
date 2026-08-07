@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 
 const links = [
   { href: "/#hakkimizda", label: "Hakkımızda" },
-  { href: "/#hizmetlerimiz", label: "Hizmetlerimiz" },
+  // Ana sayfadaki bölüm çapası yerine gerçek hizmet sayfalarına yönlendirir
+  { href: "/hizmetler", label: "Hizmetlerimiz" },
   { href: "/blog", label: "Blog" },
   { href: "/#iletisim", label: "İletişim" },
 ];

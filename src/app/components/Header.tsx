@@ -141,7 +141,7 @@ export default function Header() {
                 {BUSINESS.shortName}
               </p>
               <Link href="/#hakkimizda" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Hakkımızda</Link>
-              <Link href="/#hizmetlerimiz" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Hizmetlerimiz</Link>
+              <Link href="/hizmetler" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Hizmetlerimiz</Link>
               <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">Blog</Link>
               <Link href="/#iletisim" onClick={() => setIsMobileMenuOpen(false)} className="block min-h-11 px-3 py-2 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md">İletişim</Link>
               <Link

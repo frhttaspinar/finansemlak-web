@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { playfair } from "./lib/fonts";
-import { SITE_URL, BUSINESS, getBusinessJsonLd } from "./lib/site";
+import {
+  SITE_URL,
+  BUSINESS,
+  HOME_DESCRIPTION,
+  HOME_TITLE,
+  getSiteGraphJsonLd,
+} from "./lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Finans Gayrimenkul | Amasya Gayrimenkul Danışmanlığı",
-  description:
-    "Finans Gayrimenkul Danışmanlık; Amasya’da satılık ve kiralık konut, arsa, iş yeri ve gayrimenkul danışmanlığı hizmetleri sunar.",
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
   applicationName: BUSINESS.name,
   alternates: {
     // Next.js kök adresi normalize eder; sitemap.xml ile birebir aynı biçim üretilir
@@ -29,14 +34,13 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: SITE_URL,
     siteName: BUSINESS.name,
-    title: "Finans Gayrimenkul | Amasya Gayrimenkul Danışmanlığı",
-    description:
-      "Finans Gayrimenkul Danışmanlık; Amasya’da satılık ve kiralık konut, arsa, iş yeri ve gayrimenkul danışmanlığı hizmetleri sunar.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     // Görsel, app/opengraph-image.tsx dosyasından otomatik üretilir (1200x630)
   },
   twitter: {
     card: "summary_large_image",
-    title: "Finans Gayrimenkul | Amasya Gayrimenkul Danışmanlığı",
+    title: HOME_TITLE,
     description:
       "Amasya’da satılık ve kiralık konut, arsa, iş yeri ve gayrimenkul danışmanlığı.",
   },
@@ -68,10 +72,15 @@ export default function RootLayout({
 
         {children}
 
+        {/*
+          İşletme (RealEstateAgent) ve WebSite düğümleri tüm sayfalarda bir kez
+          yazılır. Sayfaya özel WebPage/BreadcrumbList düğümleri ilgili sayfa
+          dosyalarında tanımlanıp buradaki @id'lere bağlanır.
+        */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getBusinessJsonLd()),
+            __html: JSON.stringify(getSiteGraphJsonLd()).replace(/</g, "\\u003c"),
           }}
         />
       </body>

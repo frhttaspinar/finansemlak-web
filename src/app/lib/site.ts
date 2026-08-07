@@ -23,6 +23,14 @@ export const BUSINESS = {
   )}`,
 } as const;
 
+/**
+ * Ana sayfanın başlık ve açıklaması; hem metadata hem de WebPage JSON-LD
+ * düğümü aynı metni kullansın diye tek yerde tutulur.
+ */
+export const HOME_TITLE = "Finans Gayrimenkul | Amasya Gayrimenkul Danışmanlığı";
+export const HOME_DESCRIPTION =
+  "Finans Gayrimenkul Danışmanlık; Amasya’da satılık ve kiralık konut, arsa, iş yeri ve gayrimenkul danışmanlığı hizmetleri sunar.";
+
 /** Logo dosyaları: üstteki header/mobil menüde, alttaki footer'da kullanılır. */
 export const LOGO_HEADER = "/ustlogo.png";
 export const LOGO_FOOTER = "/altlogo.png";
@@ -50,10 +58,10 @@ export const MAPS_EMBED = `https://maps.google.com/maps?cid=${GOOGLE_CID}&output
  * Emlak ofisine uygun RealEstateAgent şeması.
  * Puan, yorum sayısı, fiyat aralığı, çalışma saati ve koordinat gibi
  * doğrulanmamış alanlar bilinçli olarak eklenmemiştir.
+ * "@context" bilinçli olarak yazılmaz; düğüm kök graph altında render edilir.
  */
 export function getBusinessJsonLd() {
   return {
-    "@context": "https://schema.org",
     "@type": "RealEstateAgent",
     "@id": `${SITE_URL}/#business`,
     name: BUSINESS.name,
@@ -73,6 +81,45 @@ export function getBusinessJsonLd() {
       "@type": "City",
       name: "Amasya",
     },
+    /** Google işletme kaydının doğrudan haritadaki karşılığı (CID bağlantısı). */
+    hasMap: GOOGLE_MAPS_BUSINESS_URL,
+    /**
+     * Yalnızca sitede gerçekten içerik üretilen ve ofiste verilen hizmet başlıkları.
+     * Doğrulanamayan uzmanlık iddiası eklenmez.
+     */
+    knowsAbout: [
+      "Konut",
+      "Arsa",
+      "Arazi",
+      "Tarla",
+      "Ticari Gayrimenkul",
+      "Gayrimenkul Danışmanlığı",
+      "Tapu Süreçleri",
+    ],
     sameAs: [BUSINESS.instagram, GOOGLE_MAPS_BUSINESS_URL],
+  };
+}
+
+/** Site genelini temsil eden WebSite düğümü; yayıncısı işletme kaydıdır. */
+export function getWebSiteJsonLd() {
+  return {
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: BUSINESS.name,
+    inLanguage: "tr-TR",
+    publisher: { "@id": `${SITE_URL}/#business` },
+  };
+}
+
+/**
+ * Tüm sayfalarda bir kez render edilen kök graph.
+ * Sayfaya özel WebPage/BreadcrumbList düğümleri ilgili sayfa dosyalarında
+ * tanımlanır ve buradaki @id'lere bağlanır; aynı düğüm iki kez yazılmaz.
+ */
+export function getSiteGraphJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [getBusinessJsonLd(), getWebSiteJsonLd()],
   };
 }

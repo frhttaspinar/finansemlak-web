@@ -62,6 +62,7 @@ const jsonLd = {
       name: title,
       description,
       inLanguage: "tr-TR",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
       breadcrumb: { "@id": `${canonical}#breadcrumb` },
     },
     {
